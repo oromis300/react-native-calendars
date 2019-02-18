@@ -18,7 +18,7 @@ class ReservationListItem extends Component {
     if (!r1 && !r2) {
       changed = false;
     } else if (r1 && r2) {
-      if (r1.day.getTime() !== r2.day.getTime()) {
+      if (r1.reservation && moment(r1.reservation.start).valueOf() !== moment(r2.reservation.start).valueOf()) {
         changed = true;
       } else if (!r1.reservation && !r2.reservation) {
         changed = false;
@@ -39,8 +39,8 @@ class ReservationListItem extends Component {
     if (date) {
       return (
         <View style={this.styles.day}>
-          <Text allowFontScaling={false} style={[this.styles.dayNum, today]}>{date.getDate()}</Text>
-          <Text allowFontScaling={false} style={[this.styles.dayText, today]}>{XDate.locales[XDate.defaultLocale].dayNamesShort[date.getDay()]}</Text>
+          <Text allowFontScaling={false} style={[this.styles.dayNum, today]}>{item ? moment(item.start).format('DD') : moment(date).format('DD')}</Text>
+          <Text allowFontScaling={false} style={[this.styles.dayText, today]}>{item ? moment(item.start).format('MMM') : moment(date).format('MMM')}</Text>
         </View>
       );
     } else {

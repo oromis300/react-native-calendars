@@ -7,6 +7,7 @@ import {
 import Reservation from './reservation';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
+import moment from 'moment';
 
 import dateutils from '../../dateutils';
 import styleConstructor from './style';
@@ -126,19 +127,21 @@ class ReactComp extends Component {
 
   getReservationsForDay(iterator, props) {
     const day = iterator.clone();
+    const date = moment(day.toString('yyyy-MM-dd'));
     const res = props.reservations[day.toString('yyyy-MM-dd')];
+    
     if (res && res.length) {
       return res.map((reservation, i) => {
         return {
           reservation,
-          date: i ? false : day,
-          day
+          date: i ? false : date,
+          day: date,
         };
       });
     } else if (res) {
       return [{
-        date: iterator.clone(),
-        day
+        date: date,
+        day: date,
       }];
     } else {
       return false;
